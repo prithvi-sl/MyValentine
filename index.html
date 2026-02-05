@@ -56,13 +56,13 @@ button {
   color: white;
 }
 
-/* hearts */
+/* Floating hearts */
 .heart {
   position: fixed;
   bottom: -20px;
   font-size: 20px;
   animation: floatUp linear forwards;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 @keyframes floatUp {
@@ -89,17 +89,15 @@ button {
 const noBtn = document.getElementById("no");
 const box = document.querySelector(".buttons");
 const yesBtn = document.getElementById("yes");
-const container = document.querySelector(".container");
 const heading = document.querySelector("h1");
 
-// AGGRESSIVE NO BUTTON (runs away early)
+// NO button runs away before you touch it
 document.addEventListener("mousemove", (e) => {
-  const noRect = noBtn.getBoundingClientRect();
+  const rect = noBtn.getBoundingClientRect();
+  const dx = Math.abs(e.clientX - (rect.left + rect.width / 2));
+  const dy = Math.abs(e.clientY - (rect.top + rect.height / 2));
 
-  const distanceX = Math.abs(e.clientX - (noRect.left + noRect.width / 2));
-  const distanceY = Math.abs(e.clientY - (noRect.top + noRect.height / 2));
-
-  if (distanceX < 140 && distanceY < 90) {
+  if (dx < 140 && dy < 90) {
     const maxX = box.clientWidth - noBtn.offsetWidth;
     const maxY = box.clientHeight - noBtn.offsetHeight;
 
@@ -108,18 +106,17 @@ document.addEventListener("mousemove", (e) => {
   }
 });
 
-// YES CLICK MAGIC ✨
+// YES click magic
 yesBtn.onclick = () => {
   box.style.display = "none";
   heading.innerText = "I knew you’d say yes ❤️";
 
-  // heart explosion
   for (let i = 0; i < 40; i++) {
     createHeart(true);
   }
 };
 
-// HEART CREATOR
+// Create heart function
 function createHeart(burst = false) {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -133,38 +130,10 @@ function createHeart(burst = false) {
   setTimeout(() => heart.remove(), 5000);
 }
 
-// CONTINUOUS HEARTS
+// Continuous hearts
 setInterval(() => {
   createHeart();
 }, 250);
-</script>
-
-yesBtn.onclick = () => {
-  window.location.href = "https://example.com";
-};
-
-function moveNo() {
-  const maxX = box.clientWidth - noBtn.offsetWidth;
-  const maxY = box.clientHeight - noBtn.offsetHeight;
-
-  noBtn.style.left = Math.random() * maxX + "px";
-  noBtn.style.top = Math.random() * maxY + "px";
-}
-
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
-
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = 3 + Math.random() * 3 + "s";
-  heart.style.fontSize = 16 + Math.random() * 24 + "px";
-
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 300);
 </script>
 
 </body>
