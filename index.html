@@ -89,6 +89,55 @@ button {
 const noBtn = document.getElementById("no");
 const box = document.querySelector(".buttons");
 const yesBtn = document.getElementById("yes");
+const container = document.querySelector(".container");
+const heading = document.querySelector("h1");
+
+// AGGRESSIVE NO BUTTON (runs away early)
+document.addEventListener("mousemove", (e) => {
+  const noRect = noBtn.getBoundingClientRect();
+
+  const distanceX = Math.abs(e.clientX - (noRect.left + noRect.width / 2));
+  const distanceY = Math.abs(e.clientY - (noRect.top + noRect.height / 2));
+
+  if (distanceX < 140 && distanceY < 90) {
+    const maxX = box.clientWidth - noBtn.offsetWidth;
+    const maxY = box.clientHeight - noBtn.offsetHeight;
+
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+  }
+});
+
+// YES CLICK MAGIC ✨
+yesBtn.onclick = () => {
+  box.style.display = "none";
+  heading.innerText = "I knew you’d say yes ❤️";
+
+  // heart explosion
+  for (let i = 0; i < 40; i++) {
+    createHeart(true);
+  }
+};
+
+// HEART CREATOR
+function createHeart(burst = false) {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (burst ? 30 : 18) + Math.random() * 20 + "px";
+  heart.style.animationDuration = (burst ? 2 : 3 + Math.random() * 2) + "s";
+
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+// CONTINUOUS HEARTS
+setInterval(() => {
+  createHeart();
+}, 250);
+</script>
 
 yesBtn.onclick = () => {
   window.location.href = "https://example.com";
