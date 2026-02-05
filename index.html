@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ff6f91, #ff9671, #ffc75f);
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+h1 {
+  color: white;
+  font-size: 2.4rem;
+  margin-bottom: 40px;
+}
+
+.buttons {
+  position: relative;
+  width: 320px;
+  height: 160px;
+  margin: auto;
+}
+
+button {
+  position: absolute;
+  width: 130px;
+  height: 55px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#yes {
+  left: 0;
+  background: #00c853;
+  color: white;
+}
+
+#no {
+  right: 0;
+  background: #d50000;
+  color: white;
+}
+
+/* hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp linear forwards;
+  opacity: 0.8;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Will you be my Valentine forever? ❤️</h1>
+
+  <div class="buttons">
+    <button id="yes">YES</button>
+    <button id="no">NO</button>
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const box = document.querySelector(".buttons");
+const yesBtn = document.getElementById("yes");
+
+yesBtn.onclick = () => {
+  window.location.href = "https://example.com";
+};
+
+function moveNo() {
+  const maxX = box.clientWidth - noBtn.offsetWidth;
+  const maxY = box.clientHeight - noBtn.offsetHeight;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = 3 + Math.random() * 3 + "s";
+  heart.style.fontSize = 16 + Math.random() * 24 + "px";
+
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
